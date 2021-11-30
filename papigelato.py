@@ -10,20 +10,24 @@ def top():
     elif aantal >= 4 and aantal <= 8:
         print(f'Dan krijgt u van mij een bakje met {aantal} bolletjes')
         end()
-    elif aantal <= 9:
+    elif aantal >= 9:
         print('Sorry, zulke grote bakken hebben we niet.')
         top()
     else:
+        print('test')
         sorry()
         top()
 
 def end():
-    afgifte = str(print(f'Wilt u nog meer bestellen? (J/N)')).lower()
-    if afgifte == 'J':
+    afgifte = str(input('Wilt u nog meer bestellen? (J/N)')).lower()
+    if afgifte == 'j':
         top()
-    elif afgifte == 'N':
+    elif afgifte == 'n':
         print('Bedankt en tot ziens!')
         exit()
+    else:
+        print('Ik begrijp dit niet...')
+        end()
 
 def sorry():
     print('Sorry, dat snap ik niet.')
