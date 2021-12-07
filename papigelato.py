@@ -1,5 +1,8 @@
-print('Welkom bij Papi Gelato je mag alle smaken kiezen zolang het maar vanille ijs is.')
+print('Welkom bij Papi Gelato, wij hebben de juiste smaken!')
 
+vanille = 0
+chocolate = 0
+strawberry = 0
 aantalBol = 0
 aantalBol2 =+ aantalBol
 aantalHoorn = 0
@@ -14,6 +17,7 @@ def prijs():
     totaalhoornPrijs = float(aantalHoorn * hoornPrijs)
     totaalbakPrijs = float(aantalBak * bakPrijs)
     totaalPrijs = float(totaalbolPrijs + totaalhoornPrijs + totaalbakPrijs)
+    print('------------------------')
     print(f'Bol      ' + str(aantalBol) + ' x ' + str(bolPrijs) + ' euro')
     print(f'Hoorn    ' + str(aantalHoorn) + ' x ' + str(hoornPrijs) + ' euro')
     print(f'Bak      ' + str(aantalBak) + ' x ' + str(bakPrijs) + ' euro')
@@ -60,6 +64,7 @@ def top():
             sorry()
             top()
     elif aantalBol >= 4 and aantalBol <= 8:
+        aantalBak += 1
         aantalBol2 =+ aantalBol
         print(f'Dan krijgt u van mij een bakje met {aantalBol} bolletjes')
         prijs()
@@ -73,4 +78,14 @@ def top():
 def sorry():
     print('Sorry, dat snap ik niet.')
 
-top()
+def smaken():
+    print('VANILLE - STRAWBERRY - CHOCOLATE')
+    smaak = str(input(f'Welke smaak wilt u? >>> ')).lower()
+    print(f'{smaak} dat is een lekkere smaak!')
+    smaakKeuze = str(input('Wil je nog een smaak kiezen? (J/N) >>> ')).lower()
+    if smaakKeuze == 'j':
+        smaken()
+    if smaakKeuze == 'n':
+        top()
+
+smaken()
