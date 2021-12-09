@@ -4,12 +4,12 @@ vanille = 0
 chocolate = 0
 strawberry = 0
 aantalBol = 0
-aantalBol2 =+ aantalBol
 aantalHoorn = 0
 aantalBak = 0
 hoornPrijs = 1.25
 bakPrijs = 0.75
 bolPrijs = 1.10
+toppingPrijs = 0.20
 
 def prijs():
     global totaalPrijs, aantalBol, aantalHoorn, aantalBak, totaalbolPrijs, totaalbakPrijs, totaalhoornPrijs
@@ -18,9 +18,10 @@ def prijs():
     totaalbakPrijs = float(aantalBak * bakPrijs)
     totaalPrijs = float(totaalbolPrijs + totaalhoornPrijs + totaalbakPrijs)
     print('------------------------')
-    print(f'Bol      ' + str(aantalBol) + ' x ' + str(bolPrijs) + ' euro')
-    print(f'Hoorn    ' + str(aantalHoorn) + ' x ' + str(hoornPrijs) + ' euro')
-    print(f'Bak      ' + str(aantalBak) + ' x ' + str(bakPrijs) + ' euro')
+    if aantalBol >= 1: print(f'Bol      ' + str(aantalBol) + ' x ' + str(bolPrijs) + ' euro')
+    if aantalHoorn >= 1: print(f'Hoorn    ' + str(aantalHoorn) + ' x ' + str(hoornPrijs) + ' euro')
+    if aantalBak >= 1: print(f'Bak      ' + str(aantalBak) + ' x ' + str(bakPrijs) + ' euro')
+    print('smaak')
     print('------------------------')
     print(f'{totaalPrijs} euro')
     afrekenen()
@@ -79,7 +80,7 @@ def sorry():
     print('Sorry, dat snap ik niet.')
 
 def smaken():
-    print('VANILLE - STRAWBERRY - CHOCOLATE')
+    print('AARDBEI - CHOCOLADE - MUNT - VANILLE')
     smaak = str(input(f'Welke smaak wilt u? >>> ')).lower()
     print(f'{smaak} dat is een lekkere smaak!')
     smaakKeuze = str(input('Wil je nog een smaak kiezen? (J/N) >>> ')).lower()
@@ -87,5 +88,14 @@ def smaken():
         smaken()
     if smaakKeuze == 'n':
         top()
+    else:
+        sorry()
+        smaken()
+
+def toppings():
+    print('SPRINKLES - NOOTJES')
+    topping = str(input(f'Welke smaak wilt u? >>>'))
+    else:
+        sorry()
 
 smaken()
