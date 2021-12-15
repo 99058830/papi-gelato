@@ -4,19 +4,23 @@ aardbei = 0
 chocolade = 0
 munt = 0
 vanille = 0
+
 slagroomPrijs = 0
 SprinklesPrijs = 0
 CaramelPrijshoorn = 0
 CaramelPrijsbakje = 0
+
 aantalLiter = 0
 aantalBol = 0
 aantalHoorn = 0
 aantalBak = 0
+
 literPrijs = 9.80
 totaalPrijs = 0
 hoornPrijs = 1.25
 bakPrijs = 0.75
 bolPrijs = 1.10
+literPrijs = 9.80
 particulier = False
 zakelijk = False
 
@@ -32,6 +36,9 @@ def smaken():
     else:
         sorry()
         smaken()
+
+def toppings():
+    toppings = str(input(f'Welke topping wilt u? >>> ')).lower()
 
 def particulier():
     global totaalPrijs, aantalBol, aantalHoorn, aantalBak, totaalbolPrijs, totaalbakPrijs, totaalhoornPrijs
@@ -51,8 +58,7 @@ def particulier():
             particulier()
     elif aantalBol >= 4 and aantalBol <= 8:
         aantalBak += 1
-        aantalBol2 =+ aantalBol
-        print(f'Dan krijgt u van mij een bakje met {aantalBol} bolletjes')
+        print('Dan krijgt u van mij een bakje met {aantalBol} bolletjes')
         bonnetjePa()
     elif aantalBol >= 9:
         print('Sorry, zulke grote bakken hebben we niet.')
@@ -62,13 +68,12 @@ def particulier():
         particulier()
 
 def zakelijk():
-    liters = int(input('Hoeveel liter wilt u? >>> '))
+    aantalLiter = int(input('Hoeveel liter wilt u? >>> '))
     i = 1
-    while i <= liters:
+    while i <= aantalLiter:
         literSmaak = input('Wat voor smaakt wilt u? ' + str(i) + '?\n')
         i += 1
-        literPrijs = liters     * 9.80
-        btw        = literPrijs * 0.06
+    bonnetjeZa()
 
 
 def bonnetjePa():
@@ -79,22 +84,24 @@ def bonnetjePa():
     totaalslagroomPrijs = slagroomPrijs + 0.50
     totaalsprinklesPrijs = aantalBol * 0.30
     totaalcaramelPrijs = aantalBak * 0.90 and aantalHoorn * 0.60
-    totaalPrijs = float(totaalbolPrijs + totaalhoornPrijs + totaalbakPrijs)
-    totaalPrijsBelasting = float(totaalbolPrijs + totaalhoornPrijs + totaalbakPrijs + 2.50)
+    topping = totaalslagroomPrijs + totaalsprinklesPrijs + totaalcaramelPrijs
+    totaalPrijs = float(totaalbolPrijs + totaalhoornPrijs + totaalbakPrijs + topping)
     print('------------------------')
     if aantalBol >= 1: print(f'Bol      ' + str(aantalBol) + ' x ' + str(bolPrijs) + ' euro')
     if aantalHoorn >= 1: print(f'Hoorn    ' + str(aantalHoorn) + ' x ' + str(hoornPrijs) + ' euro')
     if aantalBak >= 1: print(f'Bak      ' + str(aantalBak) + ' x ' + str(bakPrijs) + ' euro')
-    if toppings >= 1: print(f'topping      ' + str(aantalBak) + ' x ' + str(bakPrijs) + ' euro')
-    print(smaken)
+    if topping >= 1: print(f'Topping      ' + str(topping) + ' euro')
     print('------------------------')
     print(f'{totaalPrijs} euro')
     afrekenen()
 
 def bonnetjeZa():
-    totaalPrijsBelasting = float(aantalLiter * 9.80)
+    global zakelijk, aantalLiter
+    totaalPrijs = int(aantalLiter * literPrijs)
+    totaalPrijsBelasting = int(totaalPrijs * 0.06)
     print('------------------------')
-    if aantalLiter >= 1: print(f'Liter')
+    if aantalLiter >= 1: print(f'Liter ijs      ' + str(aantalLiter) + ' x ' + str(literPrijs) + ' euro')
+    else: print('Er is geen aantal liter aangegeven.')
     print('------------------------')
     print(f'{totaalPrijsBelasting} euro')
     afrekenen()
@@ -129,6 +136,5 @@ def paza():
         particulier()
     if paza == "zakelijk":
         zakelijk()
-    smaken()
 
 paza()
