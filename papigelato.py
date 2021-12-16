@@ -37,6 +37,9 @@ def paza():
 def particulier():
     global totaalPrijs, aantalBol, aantalHoorn, aantalBak, aardbei, chocolade, munt, vanille, keuze, toppings
     aantalBol = int(input('Hoeveel bolletjes wilt u? >>> '))
+    if aantalBol >= 9:
+        print('Sorry, zulke grote bakken hebben we niet.')
+        particulier()
     i = 1
     while i <= aantalBol:
         print('AARDBEI - CHOCOLADE - MUNT - VANILLE')
@@ -67,9 +70,6 @@ def particulier():
         aantalBak += 1
         print('Dan krijgt u van mij een bakje met {aantalBol} bolletjes')
         toppings()
-    elif aantalBol >= 9:
-        print('Sorry, zulke grote bakken hebben we niet.')
-        particulier()
 
 def zakelijk():
     global aantalLiters, aardbei, chocolade, munt, vanille
