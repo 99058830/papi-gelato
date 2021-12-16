@@ -2,7 +2,6 @@ print('Welkom bij Papi Gelato, wij hebben de juiste smaken!')
 
 aardbei = False
 chocolade = False
-munt = False
 vanille = False
 
 aantalGeen = 0
@@ -18,10 +17,11 @@ aantalHoorn = 0
 aantalBak = 0
 literPrijs = 9.80
 totaalPrijs = 0
+totaalAlles = 0
 totaalPrijsBelasting = 0
 hoornPrijs = 1.25
 bakPrijs = 0.75
-bolPrijs = 1.10
+bolPrijs = 0.95
 literPrijs = 9.80
 
 def paza():
@@ -35,7 +35,7 @@ def paza():
         exit()
 
 def particulier():
-    global totaalPrijs, aantalBol, aantalHoorn, aantalBak, aardbei, chocolade, munt, vanille, keuze, toppings, bollen
+    global totaalPrijs, aantalBol, aantalHoorn, aantalBak, aardbei, chocolade, vanille, keuze, toppings, bollen
     aantalBol = int(input('Hoeveel bolletjes wilt u? >>> '))
     bollen += aantalBol
     if aantalBol >= 9:
@@ -43,15 +43,13 @@ def particulier():
         particulier()
     i = 1
     while i <= aantalBol:
-        print('AARDBEI - CHOCOLADE - MUNT - VANILLE')
+        print('AARDBEI - CHOCOLADE - VANILLE')
         bolSmaak = input('Wat voor smaakt wilt u? ' + str(i) + '\n').lower()
         i += 1
         if bolSmaak == 'aardbei':
             aardbei += True
         elif bolSmaak == 'chocolade':
             chocolade += True
-        elif bolSmaak == 'munt':
-            munt += True
         elif bolSmaak == 'vanille':
             vanille += True
         else:
@@ -71,27 +69,25 @@ def particulier():
         print(f'Dan krijgt u van mij een bakje met {aantalBol} bolletjes')
         toppings()
     else:
-        print('Sorry, dat snap ik niet.')
+        print('Sorry dat is geen optie die we aanbieden...')
         particulier()
 
 def zakelijk():
-    global aantalLiters, aardbei, chocolade, munt, vanille
+    global aantalLiters, aardbei, chocolade, vanille
     aantalLiters = int(input('Hoeveel liter wilt u? >>> '))
     i = 1
     while i <= aantalLiters:
-        print('AARDBEI - CHOCOLADE - MUNT - VANILLE')
+        print('AARDBEI - CHOCOLADE - VANILLE')
         literSmaak = input('Wat voor smaakt wilt u? ' + str(i) + '\n').lower()
         i += 1
         if literSmaak == 'aardbei':
             aardbei += 1
         elif literSmaak == 'chocolade':
             chocolade += 1
-        elif literSmaak == 'munt':
-            munt += 1
         elif literSmaak == 'vanille':
             vanille += 1
         else:
-            print('Sorry, dat snap ik niet.')
+            print('Sorry dat is geen optie die we aanbieden...')
             i = 1
     bonnetjeZa()
 
@@ -113,7 +109,7 @@ def toppings():
     if paofza == 'particulier':
         bonnetjePa()
     else:
-        print('Sorry, dat snap ik niet.')
+        print('Sorry dat is geen optie die we aanbieden...')
 
 def bonnetjePa():
     global totaalPrijs, aantalBol, aantalHoorn, aantalBak, topping, totaalcaramelPrijsBak, totaalcaramelPrijsHoorn, totaalslagroomPrijs, totaalsprinklesPrijs
@@ -139,24 +135,26 @@ def bonnetjePa():
     afrekenen()
 
 def bonnetjeZa():
-    global zakelijk, aantalLiters, totaalPrijsBelasting, aardbei, chocolade, munt, vanille
+    global zakelijk, aantalLiters, totaalPrijsBelasting, totaalAlles, aardbei, chocolade, vanille
     totaalPrijsBelasting = float(aantalLiters * literPrijs)
+    totaalBelasting = (totaalPrijsBelasting * 0.06)
+    totaalAlles = (totaalBelasting + totaalPrijsBelasting)
     print('------------------------')
     if aantalLiters >= 1: print(f'Liter ijs      ' + str(aantalLiters) + ' x ' + str(literPrijs) + ' euro')
     print('------------')
     if aardbei >= 1: print(f'Aardbei      {aardbei} liter')
     if chocolade >= 1: print(f'Chocolade      {chocolade} liter')
-    if munt >= 1: print(f'Munt            {munt} liter')
     if vanille >= 1: print(f'Vanille      {vanille} liter')
     print('------------------------')
-    print(f'{totaalPrijsBelasting} euro')
+    print(f'{totaalBelasting:.2f} BTW')
+    print(f'{totaalAlles:.2f} euro')
     afrekenen()
     
 def afrekenen():
-    global totaalPrijs, totaalPrijsBelasting, aantalBol, aantalHoorn, aantalBak
+    global totaalPrijs, totaalPrijsBelastings, aantalBol, aantalHoorn, aantalBak, totaalAlles
     afrekening = str(input('Wilt u afrekenen? (J/N) >>> '))
     if afrekening == 'j':
-        print(f'Resterend bedrag om te betalen is {totaalPrijs or totaalPrijsBelasting:.2f} euro')
+        print(f'Resterend bedrag om te betalen is {totaalPrijs or totaalAlles:.2f} euro')
         bedragbetalen = float(input('Typ het volledige bedrag in >>> '))
         if bedragbetalen == bedragbetalen:
             print('Bedankt voor de betaling, hier is uw ijs. Fijne dag verder')
