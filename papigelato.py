@@ -1,9 +1,9 @@
 print('Welkom bij Papi Gelato, wij hebben de juiste smaken!')
 
-aardbei = 0
-chocolade = 0
-munt = 0
-vanille = 0
+aardbei = False
+chocolade = False
+munt = False
+vanille = False
 
 aantalGeen = 0
 aantalslagroom = 0
@@ -11,6 +11,7 @@ aantalSprinkles = 0
 aantalCaramelhoorn = 0
 aantalCaramelbakje = 0
 
+bollen = 0
 aantalLiters = 0
 aantalBol = 0
 aantalHoorn = 0
@@ -31,12 +32,12 @@ def paza():
     if paofza == "zakelijk":
         zakelijk()
     else:
-        sorry()
         exit()
 
 def particulier():
-    global totaalPrijs, aantalBol, aantalHoorn, aantalBak, aardbei, chocolade, munt, vanille, keuze, toppings
+    global totaalPrijs, aantalBol, aantalHoorn, aantalBak, aardbei, chocolade, munt, vanille, keuze, toppings, bollen
     aantalBol = int(input('Hoeveel bolletjes wilt u? >>> '))
+    bollen += aantalBol
     if aantalBol >= 9:
         print('Sorry, zulke grote bakken hebben we niet.')
         particulier()
@@ -46,13 +47,15 @@ def particulier():
         bolSmaak = input('Wat voor smaakt wilt u? ' + str(i) + '\n').lower()
         i += 1
         if bolSmaak == 'aardbei':
-            aardbei += 1
+            aardbei += True
         elif bolSmaak == 'chocolade':
-            chocolade += 1
+            chocolade += True
         elif bolSmaak == 'munt':
-            munt += 1
+            munt += True
         elif bolSmaak == 'vanille':
-            vanille += 1
+            vanille += True
+        else:
+            i = 1
     if aantalBol >= 1 and aantalBol <= 3:
         keuze = str(input(f'Wilt u deze {aantalBol} bolletje(s) in een hoorn of een bak? >>> ')).lower()
         if keuze == 'hoorn':
@@ -63,13 +66,13 @@ def particulier():
             aantalBak += 1
             print(f'Hier is uw {keuze} met {aantalBol} bolletje(s)')
             toppings()
-        else:
-            sorry()
-            particulier()
     elif aantalBol >= 4 and aantalBol <= 8:
         aantalBak += 1
-        print('Dan krijgt u van mij een bakje met {aantalBol} bolletjes')
+        print(f'Dan krijgt u van mij een bakje met {aantalBol} bolletjes')
         toppings()
+    else:
+        print('Sorry, dat snap ik niet.')
+        particulier()
 
 def zakelijk():
     global aantalLiters, aardbei, chocolade, munt, vanille
@@ -88,7 +91,8 @@ def zakelijk():
         elif literSmaak == 'vanille':
             vanille += 1
         else:
-            sorry()
+            print('Sorry, dat snap ik niet.')
+            i = 1
     bonnetjeZa()
 
 def toppings():
@@ -109,11 +113,11 @@ def toppings():
     if paofza == 'particulier':
         bonnetjePa()
     else:
-        sorry()
+        print('Sorry, dat snap ik niet.')
 
 def bonnetjePa():
     global totaalPrijs, aantalBol, aantalHoorn, aantalBak, topping, totaalcaramelPrijsBak, totaalcaramelPrijsHoorn, totaalslagroomPrijs, totaalsprinklesPrijs
-    totaalbolPrijs = float(aantalBol * bolPrijs)
+    totaalbolPrijs = float(bollen * bolPrijs)
     totaalhoornPrijs = float(aantalHoorn * hoornPrijs)
     totaalbakPrijs = float(aantalBak * bakPrijs)
     totaalslagroomPrijs = 0.50
@@ -123,13 +127,13 @@ def bonnetjePa():
     topping = totaalslagroomPrijs + totaalsprinklesPrijs
     totaalPrijs = float(totaalbolPrijs + totaalhoornPrijs + totaalbakPrijs + topping)
     print('------------------------')
-    if aantalBol >= 1: print(f'Bol      ' + str(aantalBol) + ' x ' + str(bolPrijs) + ' euro')
+    if aantalBol >= 1: print(f'Bol      ' + str(bollen) + ' x ' + str(bolPrijs) + ' euro')
     if aantalHoorn >= 1: print(f'Hoorn    ' + str(aantalHoorn) + ' x ' + str(hoornPrijs) + ' euro')
     if aantalBak >= 1: print(f'Bak      ' + str(aantalBak) + ' x ' + str(bakPrijs) + ' euro')
     if aantalslagroom >= 1: print(f'Toppings      ' + str(totaalslagroomPrijs) + ' euro')
     if aantalSprinkles >= 1: print(f'Toppings      ' + str(totaalsprinklesPrijs) + ' euro')
-    if aantalCaramelbakje >= 1: print(f'Toppings      ' + str() + ' euro')
-    if aantalCaramelhoorn >= 1: print(f'Toppings      ' + str(totaalslagroomPrijs) + ' euro')
+    if aantalCaramelbakje >= 1: print(f'Toppings      ' + str(totaalcaramelPrijsBak) + ' euro')
+    if aantalCaramelhoorn >= 1: print(f'Toppings      ' + str(totaalcaramelPrijsHoorn) + ' euro')
     print('------------------------')
     print(f'{totaalPrijs:.2f} euro')
     afrekenen()
@@ -173,8 +177,5 @@ def afrekenen():
                     exit()
                 elif stop == 'n':
                     afrekenen()
-
-def sorry():
-    print('Sorry, dat snap ik niet.')
 
 paza()
